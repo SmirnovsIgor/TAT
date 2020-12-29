@@ -3,9 +3,6 @@ package com.epam.ta.test;
 import com.epam.ta.page.ProductsPage;
 import org.testng.annotations.Test;
 
-import java.util.Collections;
-import java.util.List;
-
 
 public class AddToCardTest extends CommonConditions{
     @Test
@@ -14,9 +11,9 @@ public class AddToCardTest extends CommonConditions{
                 .openPage()
                 .submitShipItButton()
                 .choosePickItOption()
-                .submitAddToCardButton()
-                .ViewCardButton()
-                .countProductsInCard();
+                .submitAddToCartButton()
+                .ViewCartButton()
+                .countProductsInCart();
         assertEquals("1", productQty);
     }
 }

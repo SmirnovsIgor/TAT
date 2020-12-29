@@ -47,6 +47,4 @@ public class LoginPage extends AbstractPage
 		return new MainPage(driver);
 	}
 
-
-
 }
