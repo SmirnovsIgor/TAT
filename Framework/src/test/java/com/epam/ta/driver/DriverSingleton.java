@@ -5,6 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import java.time.Duration;
+
 public class DriverSingleton {
 
     private static WebDriver driver;
@@ -17,6 +19,7 @@ public class DriverSingleton {
             WebDriverManager.chromedriver().setup();
             driver = new ChromeDriver();
             System.setProperty("environment", "dev");
+            driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(40));
         }
         return driver;
     }
