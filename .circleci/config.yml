@@ -3,18 +3,6 @@ version: 2.1
 orbs:
   allure: ayte/allure@0.1.3
 
-jobs:
-  allure_step:
-    docker:
-      - image: circleci/openjdk:15-buster-browsers
-        auth:
-          username: smirnovigor077
-          password: $DOCKERHUB_PASSWORD
-    steps:
-      - checkout
-      - allure/install
-      - run: allure generate
-      - run: allure-report
   test:
     parallelism: 2
     docker:
@@ -24,6 +12,7 @@ jobs:
           password: $DOCKERHUB_PASSWORD
     steps:
       - checkout
+      - allure/install
       - run: |
           cd Framework && mvn \
           -Dtest=$(for file in $(circleci tests glob "src/test/java/com/epam/ta/test/**.java" \
@@ -32,9 +21,15 @@ jobs:
           | sed -e "s/.java/,/"; \
           done | tr -d '\r\n') \
           -e test
+      - run:
+          name: Generate allure report
+          when: always
+          command: allure generate
       - store_test_results:
           path: target/surefire-reports
-
+      - store_artifacts:
+          path allure-report
+          
   build:
     docker:
       - image: circleci/openjdk:15-buster-browsers
@@ -46,7 +41,6 @@ jobs:
       - run: cd Framework && mvn -Dmaven.test.skip=true compile
 
 workflows:
-  version: 2
 
   build-then-test:
     jobs:
@@ -54,6 +48,3 @@ workflows:
       - test:
           requires:
             - build
-      - allure_step:
-          requires:
-            - test
