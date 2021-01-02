@@ -30,14 +30,14 @@ public class ProductsPage extends AbstractPage {
     @FindBy(xpath = "//button[contains(@class, 'btn__blue')][1]")
     private WebElement shipItButton;
 
-    private By addToCartButtonCheckoutLocator  =  By.id("addToCart-cart-checkout");
-    private By viewCartButtonLocator  =  By.id("addToCart-view-cart");
-    private By choosePickProductUpLocator = By.id("atc-pickit-option");
-    private By firstCartLocator = By.xpath("//div[contains(@class,'item card')][1]");
-    private By priceLocator = By.cssSelector("span.product__price.font__sixteen");
-    private By brandCheckboxLocator = By.xpath("//*[@id=\"filter-container\"]/div/nav/ul/li[3]/fieldset/div/div/ul/li[1]");
-    private By productsBrand = By.xpath("//*[contains(@class, 'brand')]");
-    private By brand = By.xpath("//*[@id=\"filter-container\"]/div/nav/ul/li[3]/fieldset/div/div/ul/li[1]/label/span[2]");
+    private final By addToCartButtonCheckoutLocator  =  By.id("addToCart-cart-checkout");
+    private final By viewCartButtonLocator  =  By.id("addToCart-view-cart");
+    private final By choosePickProductUpLocator = By.id("atc-pickit-option");
+    private final By firstCartLocator = By.xpath("//div[contains(@class,'item card')][1]");
+    private final By priceLocator = By.cssSelector("span.product__price.font__sixteen");
+    private final By brandCheckboxLocator = By.xpath("//*[@id=\"filter-container\"]/div/nav/ul/li[3]/fieldset/div/div/ul/li[1]");
+    private final By productsBrand = By.xpath("//*[contains(@class, 'brand')]");
+    private final By brand = By.xpath("//*[@id=\"filter-container\"]/div/nav/ul/li[3]/fieldset/div/div/ul/li[1]/label/span[2]");
 
     public ProductsPage(WebDriver driver) {
         super(driver);
