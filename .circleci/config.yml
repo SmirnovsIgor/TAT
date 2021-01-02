@@ -1,8 +1,17 @@
-version: 2.0
+version: 2.1
+orbs:
+  allure: ayte/allure@0.1.3
 
 jobs:
+  allure:
+    steps:
+      - checkout
+      - allure generate --clean \
+            --config /usr/local/share/allure/config/allure.yml \
+            --report-dir allure-report \
+            allure-results\
   test:
-    parallelism: 2 # parallel containers to split the tests among
+    parallelism: 2
     docker:
       - image: circleci/openjdk:15-buster-browsers
         auth:
@@ -36,6 +45,7 @@ workflows:
 
   build-then-test:
     jobs:
+      - allure
       - build
       - test:
           requires:
