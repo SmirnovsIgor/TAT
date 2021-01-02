@@ -19,6 +19,7 @@ jobs:
       - image: circleci/openjdk:stretch
         auth:
           username: smirnovigor077
+
           password: $DOCKERHUB_PASSWORD
     steps:
       - checkout
@@ -33,6 +34,7 @@ workflows:
       - test:
           requires:
             - build
+
 
 # - run: |
 #     cd Framework && mvn \
