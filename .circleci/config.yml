@@ -16,9 +16,7 @@ jobs:
       - run: cd Framework && mvn test
       - store_test_results:
           path: ./Framework/target/surefire-reports
-      - run: allure serve ./Framework/target/surefire-reports
-      - store_artifacts:
-          path: ./allure-report
+      - allure/report
           
   build:
     docker:
