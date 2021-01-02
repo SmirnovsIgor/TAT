@@ -3,13 +3,17 @@ orbs:
   allure: ayte/allure@0.1.3
 
 jobs:
-  allure:
+  allure_step:
+    docker:
+      - image: circleci/openjdk:15-buster-browsers
+        auth:
+          username: smirnovigor077
+          password: $DOCKERHUB_PASSWORD
     steps:
       - checkout
-      - allure generate --clean \
-            --config /usr/local/share/allure/config/allure.yml \
-            --report-dir allure-report \
-            allure-results\
+      - allure/install
+      - run: allure generate
+      - run: allure-report
   test:
     parallelism: 2
     docker:
@@ -45,8 +49,10 @@ workflows:
 
   build-then-test:
     jobs:
-      - allure
       - build
       - test:
           requires:
             - build
+      - allure_step:
+          requires:
+            - test
