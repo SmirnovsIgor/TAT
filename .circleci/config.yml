@@ -10,7 +10,7 @@ jobs:
           password: $DOCKERHUB_PASSWORD
     steps:
       - checkout
-      - run: cd Framework && mvn clean test
+      - run: cd Framework && mvn test
       - store_test_results:
           path: target/surefire-reports
 
