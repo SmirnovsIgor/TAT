@@ -18,6 +18,7 @@ public class CommonConditions extends Assertions {
     public void setUp()
     {
         driver = DriverSingleton.getDriver();
+        driver.manage().window().maximize();
     }
 
     @AfterMethod(alwaysRun = true)
