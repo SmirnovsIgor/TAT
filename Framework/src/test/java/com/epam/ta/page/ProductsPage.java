@@ -69,7 +69,7 @@ public class ProductsPage extends AbstractPage {
     public List<Double> getAllProductPrices() {
         List<Double> productPrices = new LinkedList<>();
 
-        new WebDriverWait(driver, Duration.ofSeconds(20)).until(ExpectedConditions.visibilityOfElementLocated(firstCartLocator));
+        new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT_SECONDS)).until(ExpectedConditions.visibilityOfElementLocated(firstCartLocator));
         List<WebElement> pricesList = driver.findElements(priceLocator);
         pricesList.forEach(p -> productPrices.add(Double.parseDouble(p.getText().transform(price -> {
             price = price.substring(price.indexOf("$") + 1);
@@ -96,20 +96,21 @@ public class ProductsPage extends AbstractPage {
     }
 
     public CartPage ViewCartButton(){
-        driver.findElement(viewCartButtonLocator).click();
+        new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT_SECONDS)).until(ExpectedConditions
+                .elementToBeClickable(viewCartButtonLocator)).click();
         return new CartPage(driver);
     }
 
     public ProductsPage pickProductsBrand(){
-        new WebDriverWait(driver, Duration.ofSeconds(20)).until(ExpectedConditions.visibilityOfElementLocated(brandCheckboxLocator));
+        new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT_SECONDS)).until(ExpectedConditions.visibilityOfElementLocated(brandCheckboxLocator));
         driver.findElement(brandCheckboxLocator).click();
-        new WebDriverWait(driver, Duration.ofSeconds(20)).until(ExpectedConditions.visibilityOfElementLocated(brand));
+        new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT_SECONDS)).until(ExpectedConditions.visibilityOfElementLocated(brand));
         brandText = driver.findElement(brand).getText();
         return this;
     }
 
     public Boolean checkPickedBrand(){
-        new WebDriverWait(driver, Duration.ofSeconds(20)).until(ExpectedConditions.visibilityOfElementLocated(productsBrand));
+        new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT_SECONDS)).until(ExpectedConditions.visibilityOfElementLocated(productsBrand));
         List<WebElement> productsBrands = driver.findElements(productsBrand);
         Long brandsQty = productsBrands.stream()
                                        .filter(b -> b.getText().startsWith(brandText))
