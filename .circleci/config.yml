@@ -5,7 +5,6 @@ orbs:
 
 jobs:
   test:
-    parallelism: 2
     docker:
       - image: circleci/openjdk:15-buster-browsers
         auth:
@@ -14,22 +13,18 @@ jobs:
     steps:
       - checkout
       - allure/install
-      - run: |
-          cd Framework && mvn \
-          -Dtest=$(for file in $(circleci tests glob "src/test/java/com/epam/ta/test/**.java" \
-          | circleci tests split --split-by=timings); \
-          do basename $file \
-          | sed -e "s/.java/,/"; \
-          done | tr -d '\r\n') \
-          -e test
+      - run: cd Framework && mvn test
       - run:
           name: Generate allure report
           when: always
           command: allure generate
       - store_test_results:
-          path: target/surefire-reports
+          path: ./target/surefire-reports
       - store_artifacts:
-          path: allure-report
+          path: ./allure-report
+      - store_artifacts:
+          path: ./target/screenshots
+          destination: artifact-file
           
   build:
     docker:
