@@ -8,13 +8,10 @@ jobs:
         auth:
           username: smirnovigor077
           password: $DOCKERHUB_PASSWORD
-    working_directory: ~/Framework
     steps:
       - checkout
-      - run: ls
-      - run: ls ../
       - run: |
-          ./mvn \
+          cd Framework && ./mvn \
           -Dtest=$(for file in $(circleci tests glob "src/test/java/com/epam/ta/test/**.java" \
           | circleci tests split --split-by=timings); \
           do basename $file \
@@ -31,12 +28,9 @@ jobs:
         auth:
           username: smirnovigor077
           password: $DOCKERHUB_PASSWORD
-    working_directory: ~/Framework
     steps:
       - checkout
-      - run: ls
-      - run: ls ../
-      - run: mvn -Dmaven.test.skip=true package
+      - run: cd Framework && mvn -Dmaven.test.skip=true package
 
 workflows:
   version: 2
