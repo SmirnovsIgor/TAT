@@ -1,4 +1,4 @@
-on: 2.0
+version: 2.0
 
 jobs:
   test:
@@ -7,10 +7,12 @@ jobs:
       - image: circleci/openjdk:stretch
         auth:
           username: smirnovigor077
-          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+          password: $DOCKERHUB_PASSWORD
+    working_directory: ~/Framework
     steps:
       - checkout
-      - cd Framework
+      - run: ls
+      - run: ls ../
       - run: |
           ./mvn \
           -Dtest=$(for file in $(circleci tests glob "src/test/java/com/epam/ta/test/**.java" \
@@ -19,18 +21,21 @@ jobs:
           | sed -e "s/.java/,/"; \
           done | tr -d '\r\n') \
           -e test
-      - store_test_results: # We use this timing data to optimize the future runs
+      - store_test_results:
           path: target/surefire-reports
 
   build:
+
     docker:
       - image: circleci/openjdk:stretch
         auth:
           username: smirnovigor077
-          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+          password: $DOCKERHUB_PASSWORD
+    working_directory: ~/Framework
     steps:
       - checkout
-      - cd Framework
+      - run: ls
+      - run: ls ../
       - run: mvn -Dmaven.test.skip=true package
 
 workflows:
