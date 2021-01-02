@@ -14,17 +14,11 @@ jobs:
       - checkout
       - allure/install
       - run: cd Framework && mvn test
-      - run:
-          name: Generate allure report
-          when: always
-          command: allure generate
       - store_test_results:
           path: ./Framework/target/surefire-reports
+      - run: allure serve ./Framework/target/surefire-reports
       - store_artifacts:
           path: ./allure-report
-      - store_artifacts:
-          path: ./Framework/target/screenshots
-          destination: artifact-file
           
   build:
     docker:
