@@ -2,7 +2,7 @@ version: 2.0
 
 jobs:
   test:
-    # parallelism: 2 # parallel containers to split the tests among
+    parallelism: 2 # parallel containers to split the tests among
     docker:
       - image: circleci/openjdk:15-buster-browsers
         auth:
@@ -10,7 +10,14 @@ jobs:
           password: $DOCKERHUB_PASSWORD
     steps:
       - checkout
-      - run: cd Framework && mvn test
+      - run: |
+          cd Framework && mvn \
+          -Dtest=$(for file in $(circleci tests glob "src/test/java/com/epam/ta/test/**.java" \
+          | circleci tests split --split-by=timings); \
+          do basename $file \
+          | sed -e "s/.java/,/"; \
+          done | tr -d '\r\n') \
+          -e test
       - store_test_results:
           path: target/surefire-reports
 
@@ -33,31 +40,3 @@ workflows:
       - test:
           requires:
             - build
-
-# - run: |
-#     cd Framework && mvn \
-#     -Dtest=$(for file in $(circleci tests glob "src/test/java/com/epam/ta/test/**.java" \
-#     | circleci tests split --split-by=timings); \
-#     do basename $file \
-#     | sed -e "s/.java/,/"; \
-#     done | tr -d '\r\n') \
-#     -e test
-
-# version: 2
-# jobs:
-#   build:
-#     docker:
-#       - image: circleci/node:jessie-browsers
-#         auth:
-#           username: mydockerhub-user
-#           password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
-#     steps:
-#       - checkout
-#       - run: mkdir test-reports
-#       - run:
-#           name: Download Selenium
-#           command: curl -O http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.5.3.jar
-#       - run:
-#           name: Start Selenium
-#           command: java -jar selenium-server-standalone-3.5.3.jar -log test-reports/selenium.log
-#           background: true
