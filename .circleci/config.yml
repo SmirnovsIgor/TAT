@@ -4,7 +4,7 @@ jobs:
   test:
     # parallelism: 2 # parallel containers to split the tests among
     docker:
-      - image: circleci/openjdk:stretch
+      - image: maven:latest
         auth:
           username: smirnovigor077
           password: $DOCKERHUB_PASSWORD
@@ -16,7 +16,7 @@ jobs:
 
   build:
     docker:
-      - image: circleci/openjdk:stretch
+      - image: maven:latest
         auth:
           username: smirnovigor077
           password: $DOCKERHUB_PASSWORD
