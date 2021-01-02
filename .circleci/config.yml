@@ -11,7 +11,7 @@ jobs:
     steps:
       - checkout
       - run: |
-          cd Framework && ./mvn \
+          cd Framework && mvn \
           -Dtest=$(for file in $(circleci tests glob "src/test/java/com/epam/ta/test/**.java" \
           | circleci tests split --split-by=timings); \
           do basename $file \
@@ -22,7 +22,6 @@ jobs:
           path: target/surefire-reports
 
   build:
-
     docker:
       - image: circleci/openjdk:stretch
         auth:
