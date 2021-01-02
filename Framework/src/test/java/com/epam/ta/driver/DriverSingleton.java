@@ -16,8 +16,8 @@ public class DriverSingleton {
 
     public static WebDriver getDriver(){
         if (null == driver){
-            WebDriverManager.firefoxdriver().setup();
-            driver = new FirefoxDriver();
+            WebDriverManager.chromedriver().setup();
+            driver = new ChromeDriver();
             System.setProperty("environment", "dev");
             driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(40));
         }
