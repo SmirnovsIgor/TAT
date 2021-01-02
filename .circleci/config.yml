@@ -19,11 +19,11 @@ jobs:
           when: always
           command: allure generate
       - store_test_results:
-          path: ./target/surefire-reports
+          path: ./Framework/target/surefire-reports
       - store_artifacts:
           path: ./allure-report
       - store_artifacts:
-          path: ./target/screenshots
+          path: ./Framework/target/screenshots
           destination: artifact-file
           
   build:
