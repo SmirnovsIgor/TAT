@@ -27,9 +27,8 @@ public class ProductsPage extends AbstractPage {
     @FindBy(xpath = "//*[@id=\"onSortOptionChangeHandler\"]/option[2]")
     private WebElement priceLowToHighOption;
 
-    @FindBy(xpath = "//button[contains(@class, 'btn__blue')][1]")
-    private WebElement shipItButton;
 
+    private final By shipItButtonLocator = By.xpath("//button[contains(@class, 'btn__blue')][1]");
     private final By addToCartButtonCheckoutLocator  =  By.id("addToCart-cart-checkout");
     private final By viewCartButtonLocator  =  By.id("addToCart-view-cart");
     private final By choosePickProductUpLocator = By.id("atc-pickit-option");
@@ -81,7 +80,7 @@ public class ProductsPage extends AbstractPage {
 
     public ProductsPage submitShipItButton()
     {
-        shipItButton.click();
+        new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT_SECONDS)).until(ExpectedConditions.visibilityOfElementLocated(shipItButtonLocator)).click();
         return this;
     }
 
