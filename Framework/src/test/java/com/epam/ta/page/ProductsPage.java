@@ -85,12 +85,12 @@ public class ProductsPage extends AbstractPage {
     }
 
     public ProductsPage choosePickItOption(){
-        driver.findElement(choosePickProductUpLocator).click();
+        new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT_SECONDS)).until(ExpectedConditions.visibilityOfElementLocated(choosePickProductUpLocator)).click();
         return this;
     }
 
     public ProductsPage submitAddToCartButton(){
-        driver.findElement(addToCartButtonCheckoutLocator).click();
+        new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT_SECONDS)).until(ExpectedConditions.visibilityOfElementLocated(addToCartButtonCheckoutLocator)).click();
         return this;
     }
 
@@ -101,22 +101,17 @@ public class ProductsPage extends AbstractPage {
     }
 
     public ProductsPage pickProductsBrand(){
-        new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT_SECONDS)).until(ExpectedConditions.visibilityOfElementLocated(brandCheckboxLocator));
-        driver.findElement(brandCheckboxLocator).click();
-        new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT_SECONDS)).until(ExpectedConditions.visibilityOfElementLocated(brand));
-        brandText = driver.findElement(brand).getText();
+        new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT_SECONDS)).until(ExpectedConditions.visibilityOfElementLocated(brandCheckboxLocator)).click();
+        new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT_SECONDS)).until(ExpectedConditions.visibilityOfElementLocated(brand)).getText();
         return this;
     }
 
     public Boolean checkPickedBrand(){
         new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT_SECONDS)).until(ExpectedConditions.visibilityOfElementLocated(productsBrand));
         List<WebElement> productsBrands = driver.findElements(productsBrand);
-        Long brandsQty = productsBrands.stream()
+        long brandsQty = productsBrands.stream()
                                        .filter(b -> b.getText().startsWith(brandText))
                                        .count();
-        if (brandsQty == (long) productsBrands.size()){
-            return true;
-        }
-        return false;
+        return brandsQty == (long) productsBrands.size();
     }
 }
