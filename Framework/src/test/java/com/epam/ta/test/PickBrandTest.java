@@ -8,7 +8,9 @@ public class PickBrandTest extends CommonConditions{
     @Test
     public void pickBrandTest(){
         Boolean productsBrandFilterSelected = new ProductsPage(driver)
-                .openPage().pickProductsBrand().checkPickedBrand();
+                .openPage()
+                .pickProductsBrand()
+                .checkPickedBrand();
         assertEquals(productsBrandFilterSelected, true);
     }
 }

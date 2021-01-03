@@ -13,7 +13,9 @@ public class RemoveFromCardTest extends CommonConditions{
                 .submitShipItButton()
                 .choosePickItOption()
                 .submitAddToCartButton()
-                .ViewCartButton().removeProductFromCart().checkIfCartIsEmpty();
+                .ViewCartButton()
+                .removeProductFromCart()
+                .checkIfCartIsEmpty();
         assertEquals(true, isEmpty);
     }
 }
