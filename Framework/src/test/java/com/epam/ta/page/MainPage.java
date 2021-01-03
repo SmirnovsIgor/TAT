@@ -31,7 +31,7 @@ public class MainPage extends AbstractPage
 
 	public String getLoggedInUserName()
 	{
-		WebElement linkLoggedInUser = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT_SECONDS))
+		WebElement linkLoggedInUser = new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT_SECONDS + 30))
 				.until(ExpectedConditions.visibilityOfElementLocated(linkLoggedInUserLocator));
 		return linkLoggedInUser.getText().substring(4);
 	}

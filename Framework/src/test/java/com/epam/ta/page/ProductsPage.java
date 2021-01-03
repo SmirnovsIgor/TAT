@@ -90,7 +90,7 @@ public class ProductsPage extends AbstractPage {
     }
 
     public ProductsPage submitAddToCartButton(){
-        new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT_SECONDS)).until(ExpectedConditions.visibilityOfElementLocated(addToCartButtonCheckoutLocator)).click();
+        new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT_SECONDS)).until(ExpectedConditions.elementToBeClickable(addToCartButtonCheckoutLocator)).click();
         return this;
     }
 
@@ -101,7 +101,7 @@ public class ProductsPage extends AbstractPage {
     }
 
     public ProductsPage pickProductsBrand(){
-        new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT_SECONDS)).until(ExpectedConditions.visibilityOfElementLocated(brandCheckboxLocator)).click();
+        new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT_SECONDS)).until(ExpectedConditions.elementToBeClickable(brandCheckboxLocator)).click();
         new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT_SECONDS)).until(ExpectedConditions.visibilityOfElementLocated(brand)).getText();
         return this;
     }
