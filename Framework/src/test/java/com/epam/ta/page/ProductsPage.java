@@ -28,7 +28,7 @@ public class ProductsPage extends AbstractPage {
     @FindBy(xpath = "//*[@id=\"onSortOptionChangeHandler\"]/option[2]")
     private WebElement priceLowToHighOption;
 
-
+    private final By productBrandFilterLocator = By.xpath("//*[@id=\"filter_list\"]/button/span[1]");
     private final By shipItButtonLocator = By.xpath("//button[contains(@class, 'btn__blue')][1]");
     private final By addToCartButtonCheckoutLocator  =  By.id("addToCart-cart-checkout");
     private final By viewCartButtonLocator  =  By.id("addToCart-view-cart");
@@ -120,4 +120,12 @@ public class ProductsPage extends AbstractPage {
                                        .count();
         return brandsQty == (long) productsBrands.size();
     }
+
+    public Boolean removeProductBrandFilter(){
+        new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT_SECONDS))
+                .until(ExpectedConditions.visibilityOfElementLocated(productBrandFilterLocator)).click();
+        int qty = driver.findElements(productBrandFilterLocator).size();
+        return qty == 0;
+    }
+
 }

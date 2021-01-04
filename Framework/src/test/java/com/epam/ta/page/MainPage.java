@@ -21,7 +21,6 @@ public class MainPage extends AbstractPage
 		PageFactory.initElements(this.driver, this);
 	}
 
-
 	@Override
 	public MainPage openPage()
 	{
